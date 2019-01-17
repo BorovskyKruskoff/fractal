@@ -4,7 +4,9 @@ int display_error(int usage)
 {
 	if (usage == 1)
 	{
-		printf("usage: ./fdf file [colors]\nColors = FFFFFF\n");
+		printf("usage: ./fdf fractal color\nPossible coclors are : 
+			black\n
+			Possible fractals are : mandelbrot, \n");
 		return 1;
 	}
 	if (usage == 2)
@@ -18,13 +20,9 @@ int display_error(int usage)
 
 int error_management(char **argv, int argc, struct info *info)
 {
-	if (argc == 1)
+	if (argc != 3)
 		return display_error(1);
-	if (!(info->size = init_get_size(argv[1])))
-		return display_error(0);
-	if (!(create_tab(argv[1], info, info->size)))
-		return display_error(0);
-	if (!(get_colors(argc, argv, info)))
+	if (!(check_winsize()))
 		return display_error(1);
 	return 0;
 }
