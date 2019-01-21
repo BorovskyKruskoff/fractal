@@ -1,26 +1,23 @@
-NAME		= fdf
+EXEC		= fractal
 SRC_PATH	= srcs
 SRC_NAME	= main.c\
-		  get_next_line.c\
-		  color_management.c\
-		  error_management.c\
-		  image_creation.c\
-		  image_filling.c\
-		  tab_setup.c\
-		  line_tracing.c
+		  error_management.c
 SRC		= $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 OBJ_PATH	= objs
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 OBJ		= $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
-INCLUDES	= -I includes
+DEPS_PATH	= includes
+INCLUDE		= $(addprefix -I,$(DEPS_PATH))
 MLXFLAGS	= -lm -lmlx -lX11 -lXext
 FLAGS		= -Wextra -Wall -std=c99
-CFLAGS		= $(INCLUDES) $(FLAGS) $(MLXFLAGS)
+CFLAGS		= $(FLAGS) $(MLXFLAGS)
+LDFLAGS		=
 CC		= gcc
 
-all: $(NAME)
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
+	$(CC) -c -o $@ $< $(CFLAGS) $(INCLUDE)
 
-$(NAME): $(SRC)
+$(EXEC): $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS)
 
 clean:
@@ -29,4 +26,4 @@ clean:
 
 re: fclean all
 
-.PHONY: clean fclean re
+.PHONY: clean re

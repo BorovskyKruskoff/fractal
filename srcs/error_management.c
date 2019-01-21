@@ -1,12 +1,12 @@
-#include "fdf.h"
+#include "fractal.h"
 
 int display_error(int usage)
 {
 	if (usage == 1)
 	{
-		printf("usage: ./fdf fractal color\nPossible coclors are : 
-			black\n
-			Possible fractals are : mandelbrot, \n");
+		printf("usage: ./fdf fractal color\nPossible coclors are :");
+		printf("black\n");
+		printf("Possible fractals are : mandelbrot, \n");
 		return 1;
 	}
 	if (usage == 2)
