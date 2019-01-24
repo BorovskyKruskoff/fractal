@@ -17,8 +17,21 @@
 # define WINLEN 800
 # define WINHEIGHT 600
 
+struct part
+{
+	double x1;
+	double x2;
+	double y1;
+	double y2;
+};
+
 struct info
 {
+	struct part part;
+	double it_max;
+	double zoom;
+	int image_x;
+	int image_y;
 	void *mlx;
 	void *win;
 	void *image_pointer;
