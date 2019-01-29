@@ -1,0 +1,4 @@
+fractal
+main.o
+error_management.o
+mandelbrot.o
