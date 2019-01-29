@@ -1,10 +1,29 @@
 #include "fractal.h"
 
+//x_percent being 0 means the window was clicked on the far left
+//y_percent being 0 means the window was clicked on the top
 int zoom_in(int x, int y, struct info *info)
 {
+	double x_percent;
+	double y_percent;
+	double x_cut = info->x_total * 0.75;
+	double y_cut = info->y_total * 0.75;
+
+	(void)x_percent;
+	(void)y_percent;
+	(void)x_cut;
+	(void)y_cut;
 	(void)x;
 	(void)y;
 	(void)info;
+	info->x_total *= 0.75;
+	info->y_total *= 0.75;
+	if (x < WINLEN / 10)
+		x_percent = 0;
+	else if (x > WINLEN * 0.9)
+		x_percent = 100;
+//	else
+//		x_percent = 
 	return 0;
 }
 
