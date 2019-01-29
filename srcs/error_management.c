@@ -20,6 +20,8 @@ int display_error(int usage)
 
 int error_management(char **argv, int argc, struct info *info)
 {
+	(void)argv;
+	(void)info;
 	if (argc != 3)
 		return display_error(1);
 	if (!(check_winsize()))
