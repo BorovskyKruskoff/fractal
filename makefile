@@ -15,16 +15,21 @@ CFLAGS		= $(FLAGS) $(MLXFLAGS)
 LDFLAGS		=
 CC		= gcc
 
-$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
-	$(CC) -c -o $@ $< $(CFLAGS) $(INCLUDE)
+all: $(OBJ_PATH) $(EXEC)
 
 $(EXEC): $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS)
 
-clean:
-	rm -fv $(OBJ)
-	rm -fv $(NAME)
+$(OBJ_PATH):
+	mkdir $@
 
-re: fclean all
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
+	$(CC) -c -o $@ $< $(CFLAGS) $(INCLUDE)
+
+clean:
+	rm -rfv $(OBJ_PATH)
+	rm -fv $(EXEC)
+
+re: clean all
 
 .PHONY: clean re
