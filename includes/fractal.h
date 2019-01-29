@@ -5,6 +5,10 @@
 #  define M_PI 3.1415926535
 # endif
 
+# define WINLEN 800
+# define WINHEIGHT 600
+
+
 # include <ctype.h>
 # include <math.h>
 # include <mlx.h>
@@ -30,6 +34,7 @@ struct info
 	struct part part;
 	double it_max;
 	double zoom;
+	int min_length;
 	int image_x;
 	int image_y;
 	void *mlx;
@@ -38,6 +43,7 @@ struct info
 	char *image;
 };
 
+void draw_mandelbrot(struct info *info);
 int display_error(int usage);
 int error_management(char **argv, int argc, struct info *info);
 int check_winsize(void);

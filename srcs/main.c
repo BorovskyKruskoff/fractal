@@ -1,22 +1,46 @@
 #include "fractal.h"
 
+int zoom_in(int x, int y, struct info *info)
+{
+	
+}
+
 static int key_management(int keycode, void *param)
 {
-	struct info	*info;
+	struct info *info;
 
 	info = (struct info*)param;
+	(void)info;
 	printf("The key pressed is : %d\n.", keycode);
+	if (keycode == 65307)
+		exit(0);
 	return 0;
 }
 
-initiate_attributes(struct info *info)
+static int mouse_management(int keycode, int x, int y, void *param)
+{
+	struct info *info;
+
+	info = (struct info*)param;
+	(void)info;
+	printf("The mouse keycode is : %d\n.", keycode);
+	if (keycode == 1)
+		zoom_in(x, y, info);
+	return 0;
+}
+
+void initiate_mandelbrot(struct info *info)
 {
 	info->part.x1 = -2.1;
 	info->part.x2 = 0.6;
 	info->part.y1 = -1.2;
 	info->part.y2 = 1.2;
-	info->zoom = 100;
-	info->it_max = info->zoom / 2;
+	info->zoom = 200;
+	if (WINLEN > WINHEIGHT)
+		info->min_length = WINHEIGHT;
+	else
+		info->min_length = WINLEN;
+	info->it_max = 100;
 	info->image_x = (info->part.x2 - info->part.x1) * info->zoom;
 	info->image_y = (info->part.y2 - info->part.y1) * info->zoom;
 }
@@ -27,18 +51,21 @@ int main(int argc, char **argv)
 	void		*mlx;
 	void		*win;
 
+	(void)argc;
+	(void)argv;
 	if (!(info = (struct info*)malloc(sizeof(struct info))))
 		return (display_error(0));
-	if (error_management(argv, argc, info) || check_winsize())
-		return (1);
-	initiate_attributes(info);
+//	if (error_management(argv, argc, info) || check_winsize())
+//		return (1);
+	initiate_mandelbrot(info);
 	mlx = mlx_init();
-	win = mlx_new_window(mlx, info->image_x, info->image_y,
-		"Fractal ~ ggay");
+	win = mlx_new_window(mlx, WINLEN, WINHEIGHT,"Fractal ~ ggay");
 	info->mlx = mlx;
 	info->win = win;
 //	reset_parameters(info);
+	draw_mandelbrot(info);
 	mlx_key_hook(win, key_management, (void*)info);
+	mlx_mouse_hook(win, mouse_management, (void*)info);
 	mlx_loop(mlx);
 	return 0;
 }
