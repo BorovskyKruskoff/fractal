@@ -1,12 +1,23 @@
 #include <fractal.h>
 
+int valid_pixel(int x, int y)
+{
+	if (x < 0 || x > WINLEN || y < 0 || y > WINHEIGHT)
+		return 0;
+	return 1;
+}
+
 void draw(struct info *info, int x, int y)
 {
 	int new_x = 3200 * y + x * 4;
-	info->image[new_x] = 255;
-	info->image[new_x + 1] = 255;
-	info->image[new_x + 2] = 255;
-	info->image[new_x + 3] = 255;
+	
+	if (valid_pixel(x, y))
+	{
+		info->image[new_x] = 255;
+		info->image[new_x + 1] = 255;
+		info->image[new_x + 2] = 255;
+		info->image[new_x + 3] = 255;
+	}
 }
 
 void check_pixel(struct info *info, int x, int y)

@@ -34,6 +34,8 @@ struct info
 	struct part part;
 	double it_max;
 	double zoom;
+	double x_total;
+	double y_total;
 	int min_length;
 	int image_x;
 	int image_y;

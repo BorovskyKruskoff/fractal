@@ -2,7 +2,10 @@
 
 int zoom_in(int x, int y, struct info *info)
 {
-	
+	(void)x;
+	(void)y;
+	(void)info;
+	return 0;
 }
 
 static int key_management(int keycode, void *param)
@@ -35,14 +38,16 @@ void initiate_mandelbrot(struct info *info)
 	info->part.x2 = 0.6;
 	info->part.y1 = -1.2;
 	info->part.y2 = 1.2;
-	info->zoom = 200;
+	info->x_total = 2.7;
+	info->y_total = 2.4;
 	if (WINLEN > WINHEIGHT)
 		info->min_length = WINHEIGHT;
 	else
 		info->min_length = WINLEN;
+	info->zoom = info->min_length / info->x_total;
 	info->it_max = 100;
-	info->image_x = (info->part.x2 - info->part.x1) * info->zoom;
-	info->image_y = (info->part.y2 - info->part.y1) * info->zoom;
+	info->image_x = info->x_total * info->zoom;
+	info->image_y = info->y_total * info->zoom;
 }
 
 int main(int argc, char **argv)
@@ -62,7 +67,6 @@ int main(int argc, char **argv)
 	win = mlx_new_window(mlx, WINLEN, WINHEIGHT,"Fractal ~ ggay");
 	info->mlx = mlx;
 	info->win = win;
-//	reset_parameters(info);
 	draw_mandelbrot(info);
 	mlx_key_hook(win, key_management, (void*)info);
 	mlx_mouse_hook(win, mouse_management, (void*)info);
