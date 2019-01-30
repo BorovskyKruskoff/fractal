@@ -18,9 +18,6 @@
 # include <stdio.h>
 # include <unistd.h>
 
-# define WINLEN 800
-# define WINHEIGHT 600
-
 struct part
 {
 	double x1;

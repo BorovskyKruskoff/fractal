@@ -9,7 +9,7 @@ int valid_pixel(int x, int y)
 
 void draw(struct info *info, int x, int y)
 {
-	int new_x = 3200 * y + x * 4;
+	int new_x = (WINLEN * 4) * y + x * 4;
 	
 	if (valid_pixel(x, y))
 	{
