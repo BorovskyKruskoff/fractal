@@ -9,6 +9,7 @@ int zoom_in(int x, int y, struct info *info)
 	double x_cut = info->x_total - info->x_total * 0.95;
 	double y_cut = info->y_total - info->y_total * 0.95;
 
+	printf("xcut %f\n ycut %f\n\n", x_cut, y_cut);
 	info->zoom = (info->zoom * info->x_total * 0.95) / info->x_total;
 	info->x_total *= 0.95;
 	info->y_total *= 0.95;
@@ -17,13 +18,15 @@ int zoom_in(int x, int y, struct info *info)
 	else if (x > WINLEN * 0.9)
 		x_percent = 100;
 	else
-		x_percent = ((double)x - WINLEN / 10) / (WINLEN / 100);
+		x_percent = ((double)x - WINLEN / 10) / ((WINLEN * 0.8) / 100);
 	if (y < WINHEIGHT / 10)
 		y_percent = 0;
 	else if (y > WINHEIGHT * 0.9)
 		y_percent = 100;
 	else
-		y_percent = ((double)y - WINHEIGHT / 10) / (WINHEIGHT / 100);
+		y_percent = ((double)y - WINHEIGHT / 10) /
+			((WINHEIGHT * 0.8) / 100);
+	printf("xpercent %f\n ypercent %f\n\n", x_percent, y_percent);
 	info->part.x2 -= x_cut * (x_percent / 100);
 	info->part.x1 += x_cut * (100 - x_percent / 100);
 	info->part.y2 -= y_cut * (y_percent / 100);

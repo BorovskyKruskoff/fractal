@@ -39,7 +39,9 @@ void check_pixel(struct info *info, int x, int y)
 	if (i >= info->it_max)
 		draw(info, x, y, 255);
 	else if (i > info->it_max * 0.100)
-		draw(info, x, y, 100);
+		draw(info, x, y, 125);
+	else if (i == 0)
+		draw(info, x, y, 50);
 }
 
 void draw_mandelbrot(struct info *info)
