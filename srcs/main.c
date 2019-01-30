@@ -6,13 +6,12 @@ int zoom_in(int x, int y, struct info *info)
 {
 	double x_percent;
 	double y_percent;
-	double x_cut = info->x_total - info->x_total * 0.95;
-	double y_cut = info->y_total - info->y_total * 0.95;
+	double x_cut = info->x_total - info->x_total * 0.85;
+	double y_cut = info->y_total - info->y_total * 0.85;
 
-	printf("xcut %f\n ycut %f\n\n", x_cut, y_cut);
-	info->zoom = (info->zoom * info->x_total * 0.95) / info->x_total;
-	info->x_total *= 0.95;
-	info->y_total *= 0.95;
+	info->zoom = (info->zoom * info->x_total) / (info->x_total * 0.85);
+	info->x_total *= 0.85;
+	info->y_total *= 0.85;
 	if (x < WINLEN / 10)
 		x_percent = 0;
 	else if (x > WINLEN * 0.9)
@@ -26,11 +25,10 @@ int zoom_in(int x, int y, struct info *info)
 	else
 		y_percent = ((double)y - WINHEIGHT / 10) /
 			((WINHEIGHT * 0.8) / 100);
-	printf("xpercent %f\n ypercent %f\n\n", x_percent, y_percent);
-	info->part.x2 -= x_cut * (x_percent / 100);
-	info->part.x1 += x_cut * (100 - x_percent / 100);
-	info->part.y2 -= y_cut * (y_percent / 100);
-	info->part.y1 += y_cut * (100 - y_percent / 100);
+	info->part.x1 += x_cut * (x_percent / 100);
+	info->part.x2 -= x_cut * ((100 - x_percent) / 100);
+	info->part.y1 += y_cut * (y_percent / 100);
+	info->part.y2 -= y_cut * ((100 - y_percent) / 100);
 	return 0;
 }
 
@@ -74,7 +72,7 @@ void initiate_mandelbrot(struct info *info)
 	else
 		info->min_length = WINLEN;
 	info->zoom = info->min_length / info->x_total;
-	info->it_max = 200;
+	info->it_max = 100;
 	info->image_x = info->x_total * info->zoom;
 	info->image_y = info->y_total * info->zoom;
 }
