@@ -9,7 +9,8 @@ int zoom_in(int x, int y, struct info *info)
 	double x_cut = info->x_total - info->x_total * 0.85;
 	double y_cut = info->y_total - info->y_total * 0.85;
 
-	info->zoom = (info->zoom * info->x_total) / (info->x_total * 0.85);
+	info->zoomx = (info->zoomx * info->x_total) / (info->x_total * 0.85);
+	info->zoomy = (info->zoomy * info->y_total) / (info->y_total * 0.85);
 	info->x_total *= 0.85;
 	info->y_total *= 0.85;
 	if (x < WINLEN / 10)
@@ -38,7 +39,6 @@ static int key_management(int keycode, void *param)
 
 	info = (struct info*)param;
 	(void)info;
-	printf("The key pressed is : %d\n.", keycode);
 	if (keycode == 65307)
 		exit(0);
 	return 0;
@@ -49,8 +49,6 @@ static int mouse_management(int keycode, int x, int y, void *param)
 	struct info *info;
 
 	info = (struct info*)param;
-	(void)info;
-	printf("The mouse keycode is : %d\n.", keycode);
 	if (keycode == 1)
 	{
 		zoom_in(x, y, info);
@@ -71,10 +69,11 @@ void initiate_mandelbrot(struct info *info)
 		info->min_length = WINHEIGHT;
 	else
 		info->min_length = WINLEN;
-	info->zoom = info->min_length / info->x_total;
+	info->zoomx = WINLEN / info->x_total;
+	info->zoomy = WINHEIGHT / info->y_total;
 	info->it_max = 100;
-	info->image_x = info->x_total * info->zoom;
-	info->image_y = info->y_total * info->zoom;
+	info->image_x = info->x_total * info->zoomx;
+	info->image_y = info->y_total * info->zoomy;
 }
 
 int main(int argc, char **argv)

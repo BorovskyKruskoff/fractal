@@ -23,8 +23,8 @@ void draw(struct info *info, int x, int y, char color)
 void check_pixel(struct info *info, int x, int y)
 {
 	double tmp = 0;
-	double c_r = (x / info->zoom) + info->part.x1;
-	double c_i = (y / info->zoom) + info->part.y1;
+	double c_r = (x / info->zoomx) + info->part.x1;
+	double c_i = (y / info->zoomy) + info->part.y1;
 	double z_r = 0;
 	double z_i = 0;
 	int i = 0;
@@ -39,9 +39,9 @@ void check_pixel(struct info *info, int x, int y)
 	if (i >= info->it_max)
 		draw(info, x, y, 255);
 	else if (i > info->it_max * 0.100)
-		draw(info, x, y, 125);
-	else if (i == 0)
-		draw(info, x, y, 75);
+		draw(info, x, y, 100);
+	else
+		draw(info, x, y, 35);
 }
 
 void draw_mandelbrot(struct info *info)
@@ -52,10 +52,10 @@ void draw_mandelbrot(struct info *info)
 	int size_line = WINLEN * 4;
 	int endian = 0;
 
-	printf("zoom = %f\nx_total = %f\ny_total = %f\n", info->zoom,
-		info->x_total, info->y_total);
-	printf("x1 = %f\nx2 = %f\ny1 = %f\ny2 = %f\n", info->part.x1,
-		info->part.x2, info->part.y1, info->part.y2);
+//	printf("zoom = %f\nx_total = %f\ny_total = %f\n", info->zoom,
+//		info->x_total, info->y_total);
+//	printf("x1 = %f\nx2 = %f\ny1 = %f\ny2 = %f\n", info->part.x1,
+//		info->part.x2, info->part.y1, info->part.y2);
 	info->image_pointer = mlx_new_image(info->mlx, WINLEN, WINHEIGHT);
 	info->image = mlx_get_data_addr
 		(info->image_pointer, &(btp), &(size_line), &(endian));

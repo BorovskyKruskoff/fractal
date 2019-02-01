@@ -30,7 +30,8 @@ struct info
 {
 	struct part part;
 	double it_max;
-	double zoom;
+	double zoomx;
+	double zoomy;
 	double x_total;
 	double y_total;
 	int min_length;
