@@ -14,3 +14,6 @@ to create a list of coordinates where the real part is X and the imaginary is Y
 Mandelbrot's fractal is defined by the points in this sequence
          2
 cZn+1 = Zn + cZ0 = 0
+
+https://fr.mathworks.com/matlabcentral/fileexchange/29060-mandelbrot-fractal-with-almost-infinite-zoom
+https://github.com/JordanFisher/Infinite-Zoom-Fractal
