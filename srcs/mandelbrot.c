@@ -7,15 +7,15 @@ int valid_pixel(int x, int y)
 	return 1;
 }
 
-void draw(struct info *info, int x, int y, int color)
+void draw(struct info *info, int x, int y, char color)
 {
 	int new_x = (WINLEN * 4) * y + x * 4;
 	
 	if (valid_pixel(x, y))
 	{
-		info->image[new_x] = color;
-		info->image[new_x + 1] = color;
-		info->image[new_x + 2] = color;
+		info->image[new_x] = color * info->blue;
+		info->image[new_x + 1] = color * info->green;
+		info->image[new_x + 2] = color * info->red;
 		info->image[new_x + 3] = color;
 	}
 }
@@ -41,7 +41,7 @@ void check_pixel(struct info *info, int x, int y)
 	else if (i > info->it_max * 0.100)
 		draw(info, x, y, 125);
 	else if (i == 0)
-		draw(info, x, y, 50);
+		draw(info, x, y, 75);
 }
 
 void draw_mandelbrot(struct info *info)

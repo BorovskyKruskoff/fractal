@@ -2,6 +2,7 @@ EXEC		= fractal
 SRC_PATH	= srcs
 SRC_NAME	= main.c\
 		  error_management.c\
+		  color_management.c\
 		  mandelbrot.c
 SRC		= $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 OBJ_PATH	= objs

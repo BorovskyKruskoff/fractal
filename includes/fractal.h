@@ -36,6 +36,9 @@ struct info
 	int min_length;
 	int image_x;
 	int image_y;
+	int red;
+	int blue;
+	int green;
 	void *mlx;
 	void *win;
 	void *image_pointer;
@@ -46,5 +49,6 @@ void draw_mandelbrot(struct info *info);
 int display_error(int usage);
 int error_management(char **argv, int argc, struct info *info);
 int check_winsize(void);
+int initiate_colors(struct info *info, char **argv, int argc);
 
 #endif

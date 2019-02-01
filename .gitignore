@@ -1,4 +1,5 @@
 fractal
 main.o
 error_management.o
+color_management.o
 mandelbrot.o

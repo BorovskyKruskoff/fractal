@@ -83,12 +83,12 @@ int main(int argc, char **argv)
 	void		*mlx;
 	void		*win;
 
-	(void)argc;
-	(void)argv;
 	if (!(info = (struct info*)malloc(sizeof(struct info))))
 		return (display_error(0));
-//	if (error_management(argv, argc, info) || check_winsize())
-//		return (1);
+	if (error_management(argv, argc, info))
+		return 1;
+	if (!(initiate_colors(info, argv, argc)))
+		return 1;
 	initiate_mandelbrot(info);
 	mlx = mlx_init();
 	win = mlx_new_window(mlx, WINLEN, WINHEIGHT,"Fractal ~ ggay");
