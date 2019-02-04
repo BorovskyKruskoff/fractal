@@ -28,6 +28,7 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS) $(INCLUDE)
 
 clean:
+	rm -fv $(OBJ)
 	rm -rfv $(OBJ_PATH)
 	rm -fv $(EXEC)
 

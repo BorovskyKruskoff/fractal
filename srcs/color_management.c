@@ -11,6 +11,29 @@ static int compare(char *s1, char *s2)
 	return 0;
 }
 
+int special_colors(struct info *info, char **argv, int argc)
+{
+	(void)argc;
+	if (compare(argv[1], "purple"))
+	{
+		info->blue = 1;
+		info->red = 1;
+	}
+	else if (compare(argv[1], "yellow"))
+	{
+		info->red = 1;
+		info->green = 1;
+	}
+	else if (compare(argv[1], "cyan"))
+	{
+		info->green = 1;
+		info->blue = 1;
+	}
+	else
+		display_error(1);
+	return 1;
+}
+
 int initiate_colors(struct info *info, char **argv, int argc)
 {
 	info->red = 0;
@@ -40,6 +63,5 @@ int initiate_colors(struct info *info, char **argv, int argc)
 		return 1;
 	}
 	else
-		display_error(1);
-	return 0;
+		return (special_colors(info, argv, argc));
 }

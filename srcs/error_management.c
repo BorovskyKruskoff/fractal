@@ -5,7 +5,7 @@ int display_error(int usage)
 	if (usage == 1)
 	{
 		printf("usage: ./fdf fractal color\nPossible colors are :");
-		printf("white, red, blue, green\n");
+		printf("white, red, blue, green, cyan, yellow, purple\n");
 		printf("Possible fractals are : mandelbrot, \n");
 		return 0;
 	}
