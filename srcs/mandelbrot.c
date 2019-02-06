@@ -19,7 +19,7 @@ void draw(struct info *info, int x, int y, char color)
 		info->image[new_x + 3] = color;
 	}
 }
-
+/*
 void check_pixel(struct info *info, int x, int y)
 {
 	double tmp = 0;
@@ -37,35 +37,45 @@ void check_pixel(struct info *info, int x, int y)
 		i++;
 	}
 	if (i >= info->it_max)
-		draw(info, x, y, 255);
+		draw(info, x, y, 0);
 	else
-		draw(info, x, y, 200 * (i / info->it_max));
+		draw(info, x, y, 255 * (i / info->it_max));
 }
-
+*/
 void draw_mandelbrot(struct info *info)
 {
-	int x = 0;
-	int y = 0;
-	int btp = 24;
-	int size_line = WINLEN * 4;
-	int endian = 0;
+	double re_factor = (info->x_total) / WINLEN;
+	double im_factor = (info->y_total) / WINHEIGHT;
 
-//	printf("zoom = %f\nx_total = %f\ny_total = %f\n", info->zoom,
-//		info->x_total, info->y_total);
-//	printf("x1 = %f\nx2 = %f\ny1 = %f\ny2 = %f\n", info->part.x1,
-//		info->part.x2, info->part.y1, info->part.y2);
-	info->image_pointer = mlx_new_image(info->mlx, WINLEN, WINHEIGHT);
-	info->image = mlx_get_data_addr
-		(info->image_pointer, &(btp), &(size_line), &(endian));
-	while(y < info->image_y)
+	for (unsigned y = 0; y < WINHEIGHT; ++y)
 	{
-		while(x < info->image_x)
+		double c_im = info->part.y2 - y * im_factor;
+		for (unsigned x = 0; x < WINLEN; ++x)
 		{
-			check_pixel(info, x, y);
-			x++;
+			double c_re = info->part.x1 + x * re_factor;
+			double z_re = c_re;
+			double z_im = c_im;
+			unsigned int n = 0;
+			int isinside = 1;
+
+			while (n < info->it_max)
+			{
+				double z_re2 = z_re * z_re;
+				double z_im2 = z_im * z_im;
+				if (z_re2 + z_im2 > 4)
+				{
+					isinside = 0;
+					break;
+				}
+				z_im = 2 * z_re * z_im + c_im;
+				z_re = z_re2 - z_im2 + c_re;
+				++n;
+			}
+			if (isinside)
+				draw(info, x, y, 0);
+			else
+				draw(info, x, y, 255 * (n / info->it_max));
 		}
-		y++;
-		x = 0;
 	}
 	mlx_put_image_to_window
 		(info->mlx, info->win, info->image_pointer, 0, 0);

@@ -76,6 +76,17 @@ void initiate_mandelbrot(struct info *info)
 	info->image_y = info->y_total * info->zoomy;
 }
 
+void initiate_image(struct info *info)
+{
+	int btp = 24;
+	int size_line = WINLEN * 4;
+	int endian = 0;
+
+	info->image_pointer = mlx_new_image(info->mlx, WINLEN, WINHEIGHT);
+	info->image = mlx_get_data_addr
+		(info->image_pointer, &(btp), &(size_line), &(endian));
+}
+
 int main(int argc, char **argv)
 {
 	struct info	*info;
@@ -93,6 +104,7 @@ int main(int argc, char **argv)
 	win = mlx_new_window(mlx, WINLEN, WINHEIGHT,"Fractal ~ ggay");
 	info->mlx = mlx;
 	info->win = win;
+	initiate_image(info);
 	draw_mandelbrot(info);
 	mlx_key_hook(win, key_management, (void*)info);
 	mlx_mouse_hook(win, mouse_management, (void*)info);
