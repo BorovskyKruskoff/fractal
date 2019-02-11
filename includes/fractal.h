@@ -8,7 +8,8 @@
 # define WINLEN 800
 # define WINHEIGHT 600
 
-
+# include <pthread.h>
+# include <time.h>
 # include <ctype.h>
 # include <math.h>
 # include <mlx.h>
@@ -28,6 +29,9 @@ struct part
 
 struct info
 {
+	pthread_t thread_1;
+	pthread_t thread_2;
+	pthread_t thread_3;
 	struct part part;
 	double it_max;
 	double zoomx;

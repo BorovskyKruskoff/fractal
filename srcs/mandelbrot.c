@@ -19,7 +19,7 @@ void draw(struct info *info, int x, int y, char color)
 		info->image[new_x + 3] = color;
 	}
 }
-/*
+
 void check_pixel(struct info *info, int x, int y)
 {
 	double tmp = 0;
@@ -41,41 +41,92 @@ void check_pixel(struct info *info, int x, int y)
 	else
 		draw(info, x, y, 255 * (i / info->it_max));
 }
-*/
+
+// thread 1
+void *draw_top_right(void *param)
+{
+	struct info *info = (struct info*)param;
+	int x_max = WINLEN;
+	int y_max = WINHEIGHT;
+	int x = WINLEN / 2;
+	int y = 0;
+
+	while (y < y_max)
+	{
+		while (x < x_max)
+		{
+			check_pixel(info, x, y);
+			x++;
+		}
+		x = WINLEN / 2;
+		y++;
+	}
+	pthread_exit((void*)info->thread_1);
+}
+
+// thread 2
+void *draw_bottom_right(void *param)
+{
+	struct info *info = (struct info*)param;
+	int x_max = WINLEN;
+	int y_max = WINHEIGHT;
+	int x = WINLEN / 2;
+	int y = WINHEIGHT / 2;
+
+	while (y < y_max)
+	{
+		while (x < x_max)
+		{
+			check_pixel(info, x, y);
+			x++;
+		}
+		x = WINLEN / 2;
+		y++;
+	}
+	pthread_exit((void*)info->thread_2);
+}
+
+// thread 3
+void *draw_bottom_left(void *param)
+{
+	struct info *info = (struct info*)param;
+	int x_max = WINLEN / 2;
+	int y_max = WINHEIGHT;
+	int x = 0;
+	int y = WINHEIGHT / 2;
+
+	while (y < y_max)
+	{
+		while (x < x_max)
+		{
+			check_pixel(info, x, y);
+			x++;
+		}
+		x = 0;
+		y++;
+	}
+	pthread_exit((void*)info->thread_3);
+}
+
 void draw_mandelbrot(struct info *info)
 {
-	double re_factor = (info->x_total) / WINLEN;
-	double im_factor = (info->y_total) / WINHEIGHT;
+	int x = 0;
+	int y = 0;
 
-	for (unsigned y = 0; y < WINHEIGHT; ++y)
+	(void)x;
+	(void)y;
+	pthread_create(&info->thread_1, NULL, &draw_top_right, info);
+	pthread_create(&info->thread_2, NULL, &draw_bottom_right, info);
+	pthread_create(&info->thread_3, NULL, &draw_bottom_left, info);
+	while (y < WINHEIGHT / 2)
 	{
-		double c_im = info->part.y2 - y * im_factor;
-		for (unsigned x = 0; x < WINLEN; ++x)
+		while (x < WINLEN / 2)
 		{
-			double c_re = info->part.x1 + x * re_factor;
-			double z_re = c_re;
-			double z_im = c_im;
-			unsigned int n = 0;
-			int isinside = 1;
-
-			while (n < info->it_max)
-			{
-				double z_re2 = z_re * z_re;
-				double z_im2 = z_im * z_im;
-				if (z_re2 + z_im2 > 4)
-				{
-					isinside = 0;
-					break;
-				}
-				z_im = 2 * z_re * z_im + c_im;
-				z_re = z_re2 - z_im2 + c_re;
-				++n;
-			}
-			if (isinside)
-				draw(info, x, y, 0);
-			else
-				draw(info, x, y, 255 * (n / info->it_max));
+			check_pixel(info, x, y);
+			x++;
 		}
+		x = 0;
+		y++;
 	}
 	mlx_put_image_to_window
 		(info->mlx, info->win, info->image_pointer, 0, 0);

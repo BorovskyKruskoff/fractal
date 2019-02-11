@@ -89,10 +89,13 @@ void initiate_image(struct info *info)
 
 int main(int argc, char **argv)
 {
-	struct info	*info;
-	void		*mlx;
-	void		*win;
+	clock_t actual;
+	struct info *info;
+	void *mlx;
+	void *win;
 
+	actual = clock();
+	printf("Start ticks : %ld\n", actual);
 	if (!(info = (struct info*)malloc(sizeof(struct info))))
 		return (display_error(0));
 	if (error_management(argv, argc, info))
@@ -106,6 +109,8 @@ int main(int argc, char **argv)
 	info->win = win;
 	initiate_image(info);
 	draw_mandelbrot(info);
+	actual = clock();
+	printf("End ticks : %ld\n", actual);
 	mlx_key_hook(win, key_management, (void*)info);
 	mlx_mouse_hook(win, mouse_management, (void*)info);
 	mlx_loop(mlx);
