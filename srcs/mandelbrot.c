@@ -61,7 +61,7 @@ void *draw_top_right(void *param)
 		x = WINLEN / 2;
 		y++;
 	}
-	pthread_exit((void*)info->thread_1);
+	pthread_exit(NULL);
 }
 
 // thread 2
@@ -83,7 +83,7 @@ void *draw_bottom_right(void *param)
 		x = WINLEN / 2;
 		y++;
 	}
-	pthread_exit((void*)info->thread_2);
+	pthread_exit(NULL);
 }
 
 // thread 3
@@ -105,7 +105,7 @@ void *draw_bottom_left(void *param)
 		x = 0;
 		y++;
 	}
-	pthread_exit((void*)info->thread_3);
+	pthread_exit(NULL);
 }
 
 void draw_mandelbrot(struct info *info)
